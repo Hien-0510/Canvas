@@ -20,26 +20,35 @@ pen.canvas.style.border = '10px solid black';
         pen.closePath();
     }
 
-    drawSmileFace(W/2, H/2, 200, "red");
+    // drawSmileFace(W/2, H/2, 200, "red");
 
     function loop() {
-        const FPS = 120; 
-        let timeLoop = 1000 / FPS; 
+        const FPS = 60;
+        let timeLoop = 1000 / FPS;
         let size = 200;
         let dy = H / 2;
         let dx = W / 2;
-        let colors = ["red", "blue", "green", "yellow", "pink", "purple", "orange"];
+        let colors = ["red", "blue", "green", "yellow", "pink", "purple", "orange", "black", "brown", "gray", "white", "cyan", "magenta"];
         let currentColorIndex = 0;
-        let direction = 1; 
+        let dxSpeed = 2; 
+        let dySpeed = 2; 
     
         setInterval(() => {
             pen.clearRect(0, 0, W, H); 
-            dx += Math.random() * 10 * direction; 
-            dy += Math.random() * 10 * direction; 
+    
+            dx += dxSpeed;
+            dy += dySpeed;
+    
             pen.beginPath();
             drawSmileFace(dx, dy, size, colors[currentColorIndex]);
-            if (dx >= W || dx <= 0) {
-                direction *= -1;
+    
+            if (dx + size >= W || dx - size <= 0) {
+                dxSpeed *= -1;
+                currentColorIndex = (currentColorIndex + 1) % colors.length;
+            }
+    
+            if (dy + size >= H || dy - size <= 0) {
+                dySpeed *= -1;
                 currentColorIndex = (currentColorIndex + 1) % colors.length;
             }
     
@@ -47,7 +56,7 @@ pen.canvas.style.border = '10px solid black';
         }, timeLoop);
     }
     
-    loop();
+    loop()
     
     
     
